@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+      
+<tiles-definitions>
+
+	<definition name="recipe/list" extends="master.page">	
+		<put-attribute name="title" value="Lista de recetas" />
+		<put-attribute name="body" value="/views/recipe/list.jsp" />
+	</definition>
+	
+	<definition name="recipe/display" extends="master.page">	
+		<put-attribute name="title" value="Detalles de la receta" />
+		<put-attribute name="body" value="/views/recipe/display.jsp" />
+	</definition>
+	
+	<definition name="recipe/qualify" extends="master.page">	
+		<put-attribute name="title" value="Presentar la receta a concurso" />
+		<put-attribute name="body" value="/views/recipe/qualify.jsp" />
+	</definition>
+	
+	<definition name="recipe/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar receta" />
+		<put-attribute name="body" value="/views/recipe/edit.jsp" />
+	</definition>
+	
+	<definition name="recipe/addCategory" extends="master.page">	
+		<put-attribute name="title" value="Añadir categorías" />
+		<put-attribute name="body" value="/views/recipe/addCategory.jsp" />
+	</definition>
+	
+	<definition name="recipe/removeCategory" extends="master.page">	
+		<put-attribute name="title" value="Eliminar categorías" />
+		<put-attribute name="body" value="/views/recipe/removeCategory.jsp" />
+	</definition>
+	
+</tiles-definitions>
