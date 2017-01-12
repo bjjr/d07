@@ -177,17 +177,18 @@ public class RecipeService {
 		owner = recipe.getUser();
 		categories = categoryService.findAll();
 		
-		for(Quantity q : recipe.getQuantities()){
-			quantityService.delete(q);
-		}
-		recipe.setQuantities(null);
-		
 		if (recipe.getLikesSA() != null) {
 			for(LikeSA l : recipe.getLikesSA()){
 				likeSAService.delete(l);
 			}
 			recipe.setLikesSA(null);
 		}
+		
+		for(Quantity q : recipe.getQuantities()){
+			quantityService.delete(q);
+		}
+		recipe.setQuantities(null);
+		
 		
 		if (recipe.getComments() != null) {
 			for(Comment c : recipe.getComments()){

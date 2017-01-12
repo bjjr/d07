@@ -50,12 +50,12 @@ public class SocialActorServiceTest extends AbstractTest{
 	
 	@Test
 	public void testUnFollowSocialActor(){
-		authenticate("user1");
+		authenticate("user2");
 		
 		SocialActor current;
 		Nutritionist nutritionist2;
 		
-		nutritionist2 = nutritionistService.findOne(52);
+		nutritionist2 = nutritionistService.findOne(54);
 		current = socialActorService.findByPrincipal();
 		socialActorService.unfollowSocialActor(current, nutritionist2);
 		

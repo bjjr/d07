@@ -9,11 +9,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import domain.Contest;
-import domain.LikeSA;
-import domain.Recipe;
-
 import utilities.AbstractTest;
+import utilities.TestUtils;
+import domain.Contest;
+import domain.Recipe;
+import domain.RecipeCopy;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/datasource.xml",
@@ -28,7 +28,7 @@ public class RecipeServiceTest extends AbstractTest {
 	//Supported services
 	@Autowired
 	private ContestService contestService;
-
+	
 	// Tests
 
 	@Test
@@ -50,7 +50,7 @@ public class RecipeServiceTest extends AbstractTest {
 
 		super.authenticate("User1");
 
-		recipe = recipeService.findByKeyword("123456-abCD");
+		recipe = recipeService.findOne(TestUtils.getIdFromBeanName("recipe1"));
 		saved = recipeService.save(recipe);
 		recipeService.flush();
 
@@ -65,7 +65,7 @@ public class RecipeServiceTest extends AbstractTest {
 
 		super.authenticate("User1");
 
-		recipe = recipeService.findByKeyword("123456-abCD");
+		recipe = recipeService.findOne(83);
 
 		recipeService.delete(recipe);
 
@@ -126,24 +126,26 @@ public class RecipeServiceTest extends AbstractTest {
 	
 	@Test
 	public void testFindRecipeByKeyword(){
-		Recipe recipe;
+		Collection<Recipe> recipes;
 		
-		recipe = recipeService.findByKeyword("123456-abCD");
+		recipes = recipeService.findByKeyword("123456-abCD");
 		
-		System.out.println("Recipe" + recipe.getId() + "found");
+		System.out.println("Recipes" + recipes + "found");
 	}
 	
 	@Test
 	public void testQualifyRecipe(){
 		Recipe recipe;
+		RecipeCopy recipeCopy;
 		Contest contest;
 		
 		super.authenticate("User4");
 		
-		recipe = recipeService.findByKeyword("152677-gHsd");
-		contest = contestService.findOne(254);
+		recipe = recipeService.findOne(88);
+		recipeCopy = recipeService.copyRecipe(recipe);
+		contest = contestService.findOne(261);
 		
-		recipeService.qualifyRecipe(recipe, contest);
+		recipeService.qualifyRecipe(recipeCopy, contest);
 		
 		System.out.println("The recipe has been qualified for the contest");
 		
@@ -167,24 +169,24 @@ public class RecipeServiceTest extends AbstractTest {
 	
 	@Test
 	public void testFindLikes(){
-		Collection<LikeSA> likes;
+		Integer likes;
 		Recipe recipe;
 		
-		recipe = recipeService.findByKeyword("152677-gHsd");
+		recipe = recipeService.findOne(88);
 		likes = recipeService.findLikes(recipe);
 		
-		System.out.println("This recipe has " + likes.size() + " likes");
+		System.out.println("This recipe has " + likes + " likes");
 	}
 	
 	@Test
 	public void testFindDislikes(){
-		Collection<LikeSA> dislikes;
+		Integer dislikes;
 		Recipe recipe;
 		
-		recipe = recipeService.findByKeyword("152677-gHsd");
+		recipe = recipeService.findOne(88);
 		dislikes = recipeService.findDislikes(recipe);
 		
-		System.out.println("This recipe has " + dislikes.size() + " dislikes");
+		System.out.println("This recipe has " + dislikes + " dislikes");
 	}
 
 }

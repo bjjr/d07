@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
+import domain.Recipe;
 import domain.Step;
 
 import utilities.AbstractTest;
+import utilities.TestUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/datasource.xml",
@@ -20,6 +23,9 @@ public class StepServiceTest extends AbstractTest {
 	// Service under test
 	@Autowired
 	private StepService stepService;
+	
+	@Autowired
+	private RecipeService recipeService;
 	
 	//Tests
 	
@@ -34,13 +40,21 @@ public class StepServiceTest extends AbstractTest {
 	
 	@Test
 	public void testSaveStep(){
-		Step step, saved;
+		Step step;
+		Recipe recipe;
 		
-		step = stepService.findOne(77);
-		saved = stepService.save(step);
+		recipe = recipeService.findOne(TestUtils.getIdFromBeanName("recipe1"));
+		
+		step = stepService.findOne(78);
+		step.setDescription("abc");
 		stepService.flush();
 		
-		System.out.println("Step" + saved.getId() + "saved");
+		for (Step s : recipe.getSteps()) {
+			if (s.getId() == TestUtils.getIdFromBeanName("step2")) {
+				Assert.isTrue(s.getDescription().equals("abc"), "Test failed");
+			}
+		}
+		
 	}
 	
 	@Test
