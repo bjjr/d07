@@ -51,8 +51,10 @@ public class StepService {
 		
 		recipe = recipeService.findOne(recipeId);
 		result = stepRepository.save(step);
-		recipe.addStep(result);
-		recipeService.save(recipe);
+		if(step.getId()==0){
+			recipe.addStep(result);
+			recipeService.save(recipe);
+		}
 		
 		return result;
 		
