@@ -40,6 +40,9 @@ public class EndorserServiceTest extends AbstractTest{
 		Assert.isTrue(res.getName() == null);
 		Assert.isTrue(res.getHomepage() == null);
 		Assert.isTrue(res.getCurricula() == null);
+		
+		System.out.println("------- TEST CREATE -------");
+		System.out.println("Endorser created \n");
 			
 		unauthenticate();
 	}
@@ -52,7 +55,9 @@ public class EndorserServiceTest extends AbstractTest{
 		int id = 44;
 
 		endorser = endorserService.findOne(id);
-		System.out.println("Endorser whose id is " + id + " found: " + endorser);
+		
+		System.out.println("------- TEST FIND ONE -------");
+		System.out.println("Endorser whose id is " + id + " found: " + endorser + "\n");
 		
 		unauthenticate();
 	}
@@ -65,7 +70,8 @@ public class EndorserServiceTest extends AbstractTest{
 			
 		endorsers = endorserService.findAll();
 			
-		System.out.println(endorsers.size() + " endorsers found");
+		System.out.println("------- TEST FIND ALL -------");
+		System.out.println(endorsers.size() + " endorsers found \n");
 			
 		unauthenticate();
 	}
@@ -93,7 +99,8 @@ public class EndorserServiceTest extends AbstractTest{
 		
 		Assert.isTrue(endorsers.contains(saved));
 			
-		System.out.println("Endorser saved");
+		System.out.println("------- TEST SAVE -------");
+		System.out.println("Endorser saved \n");
 			
 		unauthenticate();
 	}
@@ -108,7 +115,8 @@ public class EndorserServiceTest extends AbstractTest{
 		
 		endorserService.delete(endorser);
 		
-		System.out.println("Endorser deleted correctly");
+		System.out.println("------- TEST DELETE -------");
+		System.out.println("Endorser deleted correctly \n");
 			
 		unauthenticate();
 	}
