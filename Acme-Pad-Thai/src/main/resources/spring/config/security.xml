@@ -53,13 +53,12 @@
 		<security:intercept-url pattern="/masterClass/actor/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/masterClass/cook/**" access="hasRole('COOK')" />
 		<security:intercept-url pattern="/masterClass/administrator/**" access="hasRole('ADMINISTRATOR')" />
-		<security:intercept-url pattern="/masterClass/admin/**" access="hasRole('ADMINISTRATOR')" />
 		
 		<security:intercept-url pattern="/learningMaterial/actor/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/learningMaterial/cook/**" access="hasRole('COOK')" />
 		
-		<security:intercept-url pattern="/text/**" access="hasRole('COOK')" />
-		<security:intercept-url pattern="/text2/actor/display.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/text/cook/**" access="hasRole('COOK')" />
+		<security:intercept-url pattern="/text/actor/display.do" access="isAuthenticated()" />
 		
 		<security:intercept-url pattern="/video/**" access="hasRole('COOK')" />
 		

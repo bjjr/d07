@@ -1,4 +1,4 @@
-package controllers.admin;
+package controllers.administrator;
 
 import java.util.Collection;
 
@@ -14,7 +14,7 @@ import controllers.AbstractController;
 import domain.MasterClass;
 
 @Controller
-@RequestMapping("/masterClass/admin")
+@RequestMapping("/masterClass/administrator")
 public class MasterClassAdminController extends AbstractController {
 
 	// Services -----------------------------------------
@@ -36,7 +36,7 @@ public class MasterClassAdminController extends AbstractController {
 		String requestURI;
 		Collection<MasterClass> masterClasses;
 		
-		requestURI = "masterClass/admin/list.do";
+		requestURI = "masterClass/administrator/list.do";
 		masterClasses = masterClassService.findAll();
 		
 		res = new ModelAndView("masterClass/list");

@@ -15,7 +15,7 @@ import controllers.AbstractController;
 import domain.Text;
 
 @Controller
-@RequestMapping("/text")
+@RequestMapping("/text/cook")
 public class TextCookController extends AbstractController {
 
 	// Services ------------------------------------------
