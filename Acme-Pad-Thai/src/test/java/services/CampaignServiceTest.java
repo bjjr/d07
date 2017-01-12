@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import utilities.TestUtils;
 import domain.Bill;
 import domain.Campaign;
 
@@ -121,7 +122,7 @@ public class CampaignServiceTest extends AbstractTest {
 	// Test ---------------------------------------
 	@Test
 	public void testMinCampaignsPerSponsor() {
-		authenticate("sponsor1");
+		authenticate("administrator1");
 		System.out
 				.println("--------------Show minumun of campaigns per Sponsor------------");
 
@@ -139,7 +140,7 @@ public class CampaignServiceTest extends AbstractTest {
 	// Test ---------------------------------------
 	@Test
 	public void testMaxCampaignsPerSponsor() {
-		authenticate("sponsor1");
+		authenticate("administrator1");
 		System.out
 				.println("--------------Show maximun of campaigns per Sponsor------------");
 
@@ -157,7 +158,7 @@ public class CampaignServiceTest extends AbstractTest {
 	// Test ---------------------------------------
 	@Test
 	public void testAvgCampaignsPerSponsor() {
-		authenticate("sponsor1");
+		authenticate("administrator1");
 		System.out
 				.println("--------------Show average of campaigns per Sponsor------------");
 
@@ -175,7 +176,7 @@ public class CampaignServiceTest extends AbstractTest {
 	// Test ---------------------------------------
 	@Test
 	public void testMinActiveCampaignsPerSponsor() {
-		authenticate("sponsor1");
+		authenticate("administrator1");
 		System.out
 				.println("--------------Show minumun of active campaigns per Sponsor------------");
 
@@ -193,7 +194,7 @@ public class CampaignServiceTest extends AbstractTest {
 	// Test ---------------------------------------
 	@Test
 	public void testMaxActiveCampaignsPerSponsor() {
-		authenticate("sponsor1");
+		authenticate("administrator1");
 		System.out
 				.println("--------------Show maximun of active campaigns per Sponsor------------");
 
@@ -211,7 +212,7 @@ public class CampaignServiceTest extends AbstractTest {
 	// Test ---------------------------------------
 	@Test
 	public void testAvgActiveCampaignsPerSponsor() {
-		authenticate("sponsor1");
+		authenticate("administrator1");
 		System.out
 				.println("--------------Show average of active campaigns per Sponsor------------");
 
@@ -233,14 +234,19 @@ public class CampaignServiceTest extends AbstractTest {
 		System.out
 				.println("--------------Increments num of displays------------");
 
-		Campaign c = campaignService.findOne(231);
+		int campaingId;
+		
+		campaingId = TestUtils.getIdFromBeanName("campaign1");
+		
+		
+		Campaign c = campaignService.findOne(campaingId);
 		int cDis = c.getDisplayed();
 		
 		System.out.println(cDis);
 
 		campaignService.incrementDisplayed(c);
 		
-		Campaign s = campaignService.findOne(231);
+		Campaign s = campaignService.findOne(campaingId);
 		int sDis = s.getDisplayed();
 		
 		System.out.println(sDis);

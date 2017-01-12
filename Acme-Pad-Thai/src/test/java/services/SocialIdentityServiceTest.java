@@ -14,6 +14,7 @@ import domain.Actor;
 import domain.SocialIdentity;
 
 import utilities.AbstractTest;
+import utilities.TestUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:spring/datasource.xml",
@@ -43,7 +44,7 @@ public class SocialIdentityServiceTest extends AbstractTest{
 		Assert.isTrue(res.getNameSN() == null);
 		Assert.isTrue(res.getNick() == null);
 		Assert.isTrue(res.getPicture() == null);
-		Assert.isTrue(res.getActor() == null);
+		Assert.isTrue(res.getActor().equals(actorService.findByPrincipal()));
 				
 		unauthenticate();
 	}
@@ -53,10 +54,12 @@ public class SocialIdentityServiceTest extends AbstractTest{
 		authenticate("user1");
 				
 		SocialIdentity socialIdentity;
-		int id = 242;
+		int socialId;
+		
+		socialId = TestUtils.getIdFromBeanName("socialIdentityU1.1");
 
-		socialIdentity = socialIdentityService.findOne(id);
-		System.out.println("SocialIdentity whose id is " + id + " found: " + socialIdentity);
+		socialIdentity = socialIdentityService.findOne(socialId);
+		System.out.println("SocialIdentity whose id is " + socialId + " found: " + socialIdentity);
 				
 		unauthenticate();
 	}
@@ -108,8 +111,11 @@ public class SocialIdentityServiceTest extends AbstractTest{
 		authenticate("user1");
 				
 		SocialIdentity socialIdentity;
+		int socialId;
+		
+		socialId = TestUtils.getIdFromBeanName("socialIdentityU1.1");
 
-		socialIdentity = socialIdentityService.findOne(242);
+		socialIdentity = socialIdentityService.findOne(socialId);
 				
 		socialIdentityService.delete(socialIdentity);
 				

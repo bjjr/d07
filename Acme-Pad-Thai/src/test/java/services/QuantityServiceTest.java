@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import domain.Quantity;
 
 import utilities.AbstractTest;
+import utilities.TestUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/datasource.xml",
@@ -27,40 +28,53 @@ public class QuantityServiceTest extends AbstractTest {
 	public void testCreateQuantity(){
 		Quantity quantity;
 		
-		quantity = quantityService.create();
+		quantity = quantityService.createDefaultQuantity();
 		
 		System.out.println("Quantity" + quantity.getId() + "created");
 	}
 	
 	@Test
 	public void testSaveQuantity(){
+		authenticate("user1");
 		Quantity quantity, saved;
+		int quantityId;
 		
-		quantity = quantityService.findOne(155);
+		quantityId = TestUtils.getIdFromBeanName("quantity1");
+		
+		quantity = quantityService.findOne(quantityId);
 		saved = quantityService.save(quantity);
 		quantityService.flush();
 		
 		System.out.println("Quantity" + saved.getId() + "saved");
+		unauthenticate();
 	}
 	
 	@Test
 	public void testDeleteQuantity(){
+		authenticate("user1");
 		Quantity quantity;
+		int quantityId;
 		
-		quantity = quantityService.findOne(155);
+		quantityId = TestUtils.getIdFromBeanName("quantity1");
 		
+		quantity = quantityService.findOne(quantityId);
 		quantityService.delete(quantity);
 		
 		System.out.println("Quantity deleted");
+		unauthenticate();
 	}
 	
 	@Test
 	public void testFindOneQuantity(){
+		authenticate("user1");
 		Quantity quantity;
+		int quantityId;
 		
-		quantity = quantityService.findOne(155);
+		quantityId = TestUtils.getIdFromBeanName("quantity1");
 		
+		quantity = quantityService.findOne(quantityId);		
 		System.out.println("Quantity" + quantity.getId() + "found");
+		unauthenticate();
 	}
 
 }

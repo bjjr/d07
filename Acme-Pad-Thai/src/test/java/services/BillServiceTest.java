@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import utilities.TestUtils;
 import domain.Bill;
 import domain.Campaign;
 
@@ -31,10 +32,17 @@ public class BillServiceTest extends AbstractTest {
 	// Test ---------------------------------------
 	@Test
 	public void testCreateBill() {
+		authenticate("sponsor1");
 		Bill bill;
-		Campaign campaign = campaignService.findOne(232);
+		int campaingId;
+		
+		campaingId = TestUtils.getIdFromBeanName("campaign1");
+		
+		Campaign campaign = campaignService.findOne(campaingId);
 
+		unauthenticate();
 		authenticate("administrator1");
+		
 		bill = billService.create(campaign);
 
 		Assert.isTrue(bill.getCampaign().equals(campaign));
@@ -51,10 +59,17 @@ public class BillServiceTest extends AbstractTest {
 	// Test ---------------------------------------
 	@Test
 	public void testSaveBill() {
+		authenticate("sponsor1");
 		Bill bill, saved;
-		Campaign campaign = campaignService.findOne(232);
+		int campaignId;
+		
+		campaignId = TestUtils.getIdFromBeanName("campaign1");
+		
+		Campaign campaign = campaignService.findOne(campaignId);
 
+		unauthenticate();
 		authenticate("administrator1");
+		
 		bill = billService.create(campaign);
 
 		bill.setDescription("test description");
@@ -70,10 +85,17 @@ public class BillServiceTest extends AbstractTest {
 	// Test ---------------------------------------
 	@Test
 	public void testDeleteBill() {
+		authenticate("sponsor1");
 		Bill bill, saved;
-		Campaign campaign = campaignService.findOne(232);
+		int campaingId;
+		
+		campaingId = TestUtils.getIdFromBeanName("campaign1");
+		
+		Campaign campaign = campaignService.findOne(campaingId);
 
+		unauthenticate();
 		authenticate("administrator1");
+		
 		bill = billService.create(campaign);
 
 		bill.setDescription("test description");

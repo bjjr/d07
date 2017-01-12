@@ -137,11 +137,11 @@ public class SponsorServiceTest extends AbstractTest {
 		System.out
 				.println("--------------List all the inactive sponsors------------");
 
-		Collection<Sponsor> all;
+		Collection<String> all;
 
 		all = sponsorService.inactiveSponsors();
 
-		for (Sponsor s : all) {
+		for (String s : all) {
 			System.out.println(s);
 		}
 

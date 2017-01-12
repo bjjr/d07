@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import utilities.TestUtils;
 import domain.Text;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -44,6 +45,10 @@ public class TextServiceTest extends AbstractTest {
 		authenticate("cook1");
 		
 		Text t;
+		int masterClassId;
+		
+		masterClassId = TestUtils.getIdFromBeanName("masterClass1");
+		
 		t = textService.create();
 		
 		t.setTitle("title");
@@ -51,7 +56,7 @@ public class TextServiceTest extends AbstractTest {
 		t.setAbstractText("abstracttext");
 		
 		Text saved;
-		saved = textService.save(t);
+		saved = textService.save(t,masterClassId);
 		textService.flush();
 		
 		Assert.isTrue(textService.exists(saved));
@@ -70,14 +75,19 @@ public class TextServiceTest extends AbstractTest {
 		Text t;
 		t = textService.create();
 		
+		int masterClassId;
+		
+		masterClassId = TestUtils.getIdFromBeanName("masterClass1");
+		
+		
 		t.setTitle("title");
 		t.setBody("body");
 		t.setAbstractText("abstracttext");
 		
 		Text saved;
-		saved = textService.save(t);
+		saved = textService.save(t,masterClassId);
 		
-		textService.delete(saved);
+		textService.delete(saved,masterClassId);
 		
 		Assert.isTrue(!textService.exists(saved));
 		
