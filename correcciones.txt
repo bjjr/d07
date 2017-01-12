@@ -1,0 +1,14 @@
+Correcciones realizadas
+
+Correcciones de URLs en distintos apartados:
+
+URLs de Text:
+	Se han eliminado las URLs que empezaban con "text2".
+	Un actor de tipo Cook ahora accede a URLs de la forma "text/cook".
+	Un actor que ha iniciado sesión en la aplicación ahora accede mediante
+	"text/actor".
+URLs relacionadas con Administrator:
+	Aquellas URLs que contenían "admin" se han cambiado por "administrator"
+
+Estos cambios se han realizado para no romper la lógica que siguen las URLs de
+la aplicación.
