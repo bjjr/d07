@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import utilities.TestUtils;
 import domain.Actor;
 import domain.Cook;
 import domain.MasterClass;
@@ -55,9 +56,9 @@ public class MasterClassServiceTest extends AbstractTest {
 		Collection<MasterClass> expected;
 		expected = new ArrayList<>();
 
-		expected.add(masterClassService.findOne(206));
-		expected.add(masterClassService.findOne(208));
-		expected.add(masterClassService.findOne(209));
+		expected.add(masterClassService.findOne(TestUtils.getIdFromBeanName("masterClass1")));
+		expected.add(masterClassService.findOne(TestUtils.getIdFromBeanName("masterClass3")));
+		expected.add(masterClassService.findOne(TestUtils.getIdFromBeanName("masterClass4")));
 
 		Collection<MasterClass> res;
 		res = new ArrayList<>();
@@ -104,7 +105,7 @@ public class MasterClassServiceTest extends AbstractTest {
 		authenticate("cook1");
 
 		MasterClass m;
-		m = masterClassService.findOne(206);
+		m = masterClassService.findOne(TestUtils.getIdFromBeanName("masterClass1"));
 
 		Collection<Actor> attenders;
 		attenders = m.getActors();
@@ -132,9 +133,9 @@ public class MasterClassServiceTest extends AbstractTest {
 		authenticate("user1");
 
 		MasterClass m;
-		m = masterClassService.findOne(207);
+		m = masterClassService.findOne(TestUtils.getIdFromBeanName("masterClass1"));
 
-		masterClassService.registerActor(m);
+		masterClassService.registerActor(m.getId());
 
 		Assert.isTrue(actorService.findByPrincipal().getMasterClasses()
 				.contains(m));
@@ -147,9 +148,9 @@ public class MasterClassServiceTest extends AbstractTest {
 		authenticate("cook1");
 
 		MasterClass m;
-		m = masterClassService.findOne(207);
+		m = masterClassService.findOne(TestUtils.getIdFromBeanName("masterClass1"));
 
-		masterClassService.registerActor(m);
+		masterClassService.registerActor(m.getId());
 
 		Assert.isTrue(actorService.findByPrincipal().getMasterClasses()
 				.contains(m));
@@ -160,7 +161,7 @@ public class MasterClassServiceTest extends AbstractTest {
 	@Test
 	public void testFindAttenders() {
 		MasterClass m;
-		m = masterClassService.findOne(206);
+		m = masterClassService.findOne(TestUtils.getIdFromBeanName("masterClass1"));
 		
 		Collection<Actor> attenders;
 		attenders = m.getActors();
@@ -248,7 +249,7 @@ public class MasterClassServiceTest extends AbstractTest {
 		authenticate("administrator1");
 		
 		MasterClass m;
-		m = masterClassService.findOne(208);
+		m = masterClassService.findOne(TestUtils.getIdFromBeanName("masterClass3"));
 		
 		masterClassService.promoteMasterClass(m);
 		
@@ -262,7 +263,7 @@ public class MasterClassServiceTest extends AbstractTest {
 		authenticate("administrator1");
 		
 		MasterClass m;
-		m = masterClassService.findOne(206);
+		m = masterClassService.findOne(TestUtils.getIdFromBeanName("masterClass1"));
 		
 		masterClassService.demoteMasterClass(m);
 		
