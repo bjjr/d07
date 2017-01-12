@@ -43,6 +43,9 @@ public class CurriculumServiceTest extends AbstractTest{
 		Assert.isTrue(res.getHobbiesSection() == null);
 		Assert.isTrue(res.getEndorsers() == null);
 		
+		System.out.println("------- TEST CREATE -------");
+		System.out.println("Curriculum created \n");
+		
 		unauthenticate();
 	}
 	
@@ -54,7 +57,9 @@ public class CurriculumServiceTest extends AbstractTest{
 		int id = 49;
 		
 		curriculum = curriculumService.findOne(id);
-		System.out.println("Curriculum whose id is " + id + " found: " + curriculum);
+		
+		System.out.println("------- TEST FIND ONE -------");
+		System.out.println("Curriculum whose id is " + id + " found: " + curriculum + "\n");
 		
 		unauthenticate();
 	}
@@ -67,7 +72,8 @@ public class CurriculumServiceTest extends AbstractTest{
 		
 		curricula = curriculumService.findAll();
 		
-		System.out.println(curricula.size() + " curricula found");
+		System.out.println("------- TEST FIND ALL -------");
+		System.out.println(curricula.size() + " curricula found \n");
 		
 		unauthenticate();
 	}
@@ -97,7 +103,8 @@ public class CurriculumServiceTest extends AbstractTest{
 		
 		Assert.isTrue(curricula.contains(saved));
 		
-		System.out.println("Curriculum saved");
+		System.out.println("------- TEST SAVE -------");
+		System.out.println("Curriculum saved \n");
 		
 		unauthenticate();
 	}
@@ -114,7 +121,8 @@ public class CurriculumServiceTest extends AbstractTest{
 		
 		Assert.isTrue(!curriculumService.findAll().contains(curriculum));
 		
-		System.out.println("Curriculum deleted correctly");
+		System.out.println("------- TEST DELETE -------");
+		System.out.println("Curriculum deleted correctly \n");
 		
 		unauthenticate();
 	}

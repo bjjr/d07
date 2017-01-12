@@ -75,13 +75,28 @@ public class CurriculumService {
 				(actorService.checkAuthority("ADMINISTRATOR")));
 		Assert.notNull(curriculum);
 		
+		Collection<Nutritionist> nutritionists;
+		
 		Curriculum result;
 		Nutritionist nutritionist;
+		nutritionists = nutritionistService.findAll();
 		
-		nutritionist = nutritionistService.findByPrincipal();
 		result = curriculumRepository.save(curriculum);
-		nutritionist.setCurriculum(result);
-		nutritionistService.save(nutritionist);
+		
+		if(curriculum.getId()==0){
+			nutritionist = nutritionistService.findByPrincipal();
+			nutritionist.setCurriculum(result);
+			nutritionistService.save(nutritionist);
+		}
+		else{
+			for(Nutritionist n:nutritionists){
+				if(n.getCurriculum().equals(curriculum)){
+					n.setCurriculum(result);
+					nutritionistService.save(n);
+					break;
+				}
+			}
+		}
 		
 		return result;
 	}

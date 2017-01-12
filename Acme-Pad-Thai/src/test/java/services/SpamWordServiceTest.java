@@ -36,6 +36,9 @@ public class SpamWordServiceTest extends AbstractTest{
 		res = spamWordService.create();
 			
 		Assert.isTrue(res.getWord() == null);
+		
+		System.out.println("------- TEST CREATE -------");
+		System.out.println("SpamWord created \n");
 			
 		unauthenticate();
 	}
@@ -48,7 +51,8 @@ public class SpamWordServiceTest extends AbstractTest{
 		int id = 20;
 
 		spamWord = spamWordService.findOne(id);
-		System.out.println("SpamWord whose id is " + id + " found: " + spamWord);
+		System.out.println("------- TEST FIND ONE -------");
+		System.out.println("SpamWord whose id is " + id + " found: " + spamWord + "\n");
 			
 		unauthenticate();
 	}
@@ -61,7 +65,8 @@ public class SpamWordServiceTest extends AbstractTest{
 			
 		spamWords = spamWordService.findAll();
 			
-		System.out.println(spamWords.size() + " spamWords found");
+		System.out.println("------- TEST FIND ALL -------");
+		System.out.println(spamWords.size() + " spamWords found \n");
 		
 		unauthenticate();
 	}
@@ -85,7 +90,8 @@ public class SpamWordServiceTest extends AbstractTest{
 		
 		Assert.isTrue(spamWords.contains(saved));
 			
-		System.out.println("SpamWord saved");
+		System.out.println("------- TEST SAVE -------");
+		System.out.println("SpamWord saved \n");
 			
 		unauthenticate();
 	}
@@ -98,15 +104,15 @@ public class SpamWordServiceTest extends AbstractTest{
 
 		spamWord = spamWordService.findOne(20);
 		
+		System.out.println("------- TEST DELETE -------");
+		
 		try{
 			spamWordService.delete(spamWord);
+			System.out.println("SpamWord deleted correctly \n");
 		}
 		catch(Exception e){
-			System.out.println(e);
+			System.out.println(e + "\n");
 		}
-			
-			
-		System.out.println("SpamWord deleted correctly");
 			
 		unauthenticate();
 	}

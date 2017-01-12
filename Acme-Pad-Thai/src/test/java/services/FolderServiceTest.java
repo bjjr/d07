@@ -38,13 +38,17 @@ public class FolderServiceTest extends AbstractTest{
 		authenticate("user2");
 		
 		Folder res;
+		Actor actor;
 		
-		res = folderService.create();
+		actor = actorService.findByPrincipal();
+		res = folderService.create(actor);
 		
 		Assert.isTrue(res.getName() == null);
 		Assert.isTrue(res.isObligatory() == false);
-		Assert.isTrue(res.getActor() == null);
 		Assert.isTrue(res.getMessages() == null);
+		
+		System.out.println("------- TEST CREATE -------");
+		System.out.println("Folder created \n");
 		
 		unauthenticate();
 	}
@@ -57,7 +61,9 @@ public class FolderServiceTest extends AbstractTest{
 		int id = 179;
 
 		folder = folderService.findOne(id);
-		System.out.println("Folder whose id is " + id + " found: " + folder);
+		
+		System.out.println("------- TEST FIND ONE -------");
+		System.out.println("Folder whose id is " + id + " found: " + folder + "\n");
 		
 		unauthenticate();
 	}
@@ -70,7 +76,8 @@ public class FolderServiceTest extends AbstractTest{
 		
 		folders = folderService.findAll();
 		
-		System.out.println(folders.size() + " folders found");
+		System.out.println("------- TEST FIND ALL -------");
+		System.out.println(folders.size() + " folders found \n");
 		
 		unauthenticate();
 	}
@@ -85,9 +92,9 @@ public class FolderServiceTest extends AbstractTest{
 		Collection<Message> messages;
 		Actor actor;
 		
-		folder = folderService.create();
-		messages = new ArrayList<Message>();
 		actor = actorService.findByPrincipal();
+		folder = folderService.create(actor);
+		messages = new ArrayList<Message>();
 		
 		folder.setName("NameFolderTest");
 		folder.setObligatory(false);
@@ -101,7 +108,8 @@ public class FolderServiceTest extends AbstractTest{
 		
 		Assert.isTrue(folders.contains(saved));
 		
-		System.out.println("Folder saved");
+		System.out.println("------- TEST SAVE -------");
+		System.out.println("Folder saved \n");
 		
 		unauthenticate();
 	}
@@ -114,14 +122,15 @@ public class FolderServiceTest extends AbstractTest{
 
 		folder = folderService.findOne(179);
 		
+		System.out.println("------- TEST DELETE -------");
+		
 		try{ 
 			folderService.delete(folder);
+			System.out.println("Folder deleted correctly \n");
 		}
 		catch(Exception e){
-			System.out.println(e);
+			System.out.println(e + "\n");
 		}
-		
-		System.out.println("Folder deleted correctly");
 		
 		unauthenticate();
 	}
@@ -137,9 +146,13 @@ public class FolderServiceTest extends AbstractTest{
 		
 		Assert.isTrue(actor.getFolders().size()>=3);
 		
+		System.out.println("------- TEST CREATE FOLDER OBLIGATORY -------");
+		
 		System.out.println("Obligatory folders created");
 		for(Folder f:folders){
 			System.out.println("Folder name: " + f.getName() + ", " + f.isObligatory());
 		}
+		
+		System.out.println("\n");
 	}
 }

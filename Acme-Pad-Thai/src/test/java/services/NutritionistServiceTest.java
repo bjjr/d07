@@ -33,7 +33,8 @@ public class NutritionistServiceTest extends AbstractTest{
 		
 		res = nutritionistService.create();
 		
-		System.out.println("Nutritionist " + res.getId() + " created");
+		System.out.println("------- TEST CREATE -------");
+		System.out.println("Nutritionist " + res.getId() + " created \n");
 	}
 	
 	@Test
@@ -44,7 +45,9 @@ public class NutritionistServiceTest extends AbstractTest{
 		int id = 52;
 		
 		nutritionist = nutritionistService.findOne(id);
-		System.out.println("Nutritionist whose id is " + id + " found: " + nutritionist);
+		
+		System.out.println("------- TEST FIND ONE -------");
+		System.out.println("Nutritionist whose id is " + id + " found: " + nutritionist + "\n");
 		
 		unauthenticate();
 	}
@@ -57,7 +60,8 @@ public class NutritionistServiceTest extends AbstractTest{
 		
 		nutritionists = nutritionistService.findAll();
 		
-		System.out.println(nutritionists.size() + " nutritionists found");
+		System.out.println("------- TEST FIND ALL -------");
+		System.out.println(nutritionists.size() + " nutritionists found \n");
 		
 		unauthenticate();
 	}
@@ -76,7 +80,8 @@ public class NutritionistServiceTest extends AbstractTest{
 		
 		Assert.isTrue(nutritionists.contains(saved));
 		
-		System.out.println("Nutritionist saved");
+		System.out.println("------- TEST SAVE -------");
+		System.out.println("Nutritionist saved \n");
 	}
 
 }

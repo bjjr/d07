@@ -88,7 +88,7 @@ public class NutritionistService {
 				actorService.checkAuthority("NUTRITIONIST") ||
 				actorService.checkAuthority("SPONSOR") ||
 				actorService.checkAuthority("COOK"))) || actorService.checkAuthority("USER")
-				|| actorService.checkAuthority("NUTRITIONIST"));
+				|| actorService.checkAuthority("NUTRITIONIST") || actorService.checkAuthority("ADMINISTRATOR"));
 		Assert.notNull(nutritionist);
 		
 		Nutritionist result;

@@ -54,11 +54,12 @@ public class MessageServiceTest extends AbstractTest{
 		res = messageService.create();
 		
 		Assert.isTrue(res.getBody() == null);
-		Assert.isTrue(res.getMoment() == null);
 		Assert.isTrue(res.getPriority() == null);
-		Assert.isTrue(res.getRecipients() == null);
 		Assert.isTrue(res.getSender() == null);
 		Assert.isTrue(res.getSubject() == null);
+		
+		System.out.println("------- TEST CREATE -------");
+		System.out.println("Message created \n");
 		
 		unauthenticate();
 	}
@@ -67,12 +68,12 @@ public class MessageServiceTest extends AbstractTest{
 	public void testFindOneMessage(){
 		authenticate("nutritionist3");
 		
-		System.out.println("------- TEST FIND ONE -------");
-		
 		Message message;
 		int id = 70;
 		
 		message = messageService.findOne(id);
+		
+		System.out.println("------- TEST FIND ONE -------");
 		System.out.println("Message whose id is " + id + " found: " + message + "\n");
 		
 		unauthenticate();
@@ -87,7 +88,6 @@ public class MessageServiceTest extends AbstractTest{
 		messages = messageService.findAll();
 		
 		System.out.println("------- TEST FIND ALL -------");
-		
 		System.out.println(messages.size() + " messages found \n");
 		
 		unauthenticate();
@@ -126,11 +126,9 @@ public class MessageServiceTest extends AbstractTest{
 		messageService.flush();
 		messages = messageService.findAll();
 		
-		
 		Assert.isTrue(messages.contains(saved));
 		
 		System.out.println("------- TEST SAVE -------");
-		
 		System.out.println("Message saved \n");
 		
 		unauthenticate();
@@ -141,13 +139,14 @@ public class MessageServiceTest extends AbstractTest{
 		authenticate("nutritionist3");
 		
 		Message message;
+		Actor actor;
 
+		actor = actorService.findByPrincipal();
 		message = messageService.findOne(70);
 		
-		messageService.delete(message);
+		messageService.delete(message, actor);
 		
 		System.out.println("------- TEST DELETE -------");
-		
 		System.out.println("Message deleted correctly \n");
 		
 		unauthenticate();
@@ -198,7 +197,7 @@ public class MessageServiceTest extends AbstractTest{
 		
 		actor = actorService.findByPrincipal();
 		message = messageService.findOne(70);
-		folder = folderService.findOne(174);
+		folder = folderService.findOne(180);
 		
 		System.out.println("------- TEST MOVE MESSAGE -------");
 		
