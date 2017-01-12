@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import domain.Ingredient;
 
 import utilities.AbstractTest;
+import utilities.TestUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -57,7 +58,12 @@ public class IngredientServiceTest extends AbstractTest{
 	public void testFindOneIngredient(){
 		Ingredient ingredient;
 		
-		ingredient = ingredientService.findOne(150);
+		int ingredientId;
+		
+		ingredientId = TestUtils.getIdFromBeanName("ingredient1");
+		
+		
+		ingredient = ingredientService.findOne(ingredientId);
 		
 		System.out.println("Ingredient" + ingredient.getId() + "found");
 	}
@@ -65,10 +71,13 @@ public class IngredientServiceTest extends AbstractTest{
 	@Test
 	public void testSaveIngredient(){
 		Ingredient ingredient, saved;
+		int ingredientId;
+		
+		ingredientId = TestUtils.getIdFromBeanName("ingredient1");
 		
 		super.authenticate("Nutritionist1");
 		
-		ingredient = ingredientService.findOne(150);
+		ingredient = ingredientService.findOne(ingredientId);
 		saved = ingredientService.save(ingredient);
 		ingredientService.flush();
 		
@@ -80,10 +89,13 @@ public class IngredientServiceTest extends AbstractTest{
 	@Test
 	public void testDeleteIngredient(){
 		Ingredient ingredient;
+		int ingredientId;
+		
+		ingredientId = TestUtils.getIdFromBeanName("ingredient1");
 		
 		super.authenticate("Nutritionist1");
 		
-		ingredient = ingredientService.findOne(150);
+		ingredient = ingredientService.findOne(ingredientId);
 		
 		try{
 			ingredientService.delete(ingredient);

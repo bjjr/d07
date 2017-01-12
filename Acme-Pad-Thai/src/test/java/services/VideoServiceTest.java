@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import utilities.TestUtils;
 import domain.Video;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -44,6 +45,11 @@ public class VideoServiceTest extends AbstractTest {
 		authenticate("cook1");
 
 		Video v;
+		int masterClassId;
+		
+		masterClassId = TestUtils.getIdFromBeanName("masterClass1");
+		
+		
 		v = videoService.create();
 
 		v.setTitle("title");
@@ -51,7 +57,7 @@ public class VideoServiceTest extends AbstractTest {
 		v.setAbstractText("abstracttext");
 
 		Video saved;
-		saved = videoService.save(v);
+		saved = videoService.save(v,masterClassId);
 		videoService.flush();
 
 		Assert.isTrue(videoService.exists(saved));
@@ -68,6 +74,10 @@ public class VideoServiceTest extends AbstractTest {
 		authenticate("cook1");
 
 		Video v;
+		int masterClassId;
+		
+		masterClassId = TestUtils.getIdFromBeanName("masterClass1");
+		
 		v = videoService.create();
 
 		v.setTitle("title");
@@ -75,9 +85,9 @@ public class VideoServiceTest extends AbstractTest {
 		v.setAbstractText("abstracttext");
 
 		Video saved;
-		saved = videoService.save(v);
+		saved = videoService.save(v,masterClassId);
 
-		videoService.delete(saved);
+		videoService.delete(saved,masterClassId);
 
 		Assert.isTrue(!videoService.exists(saved));
 

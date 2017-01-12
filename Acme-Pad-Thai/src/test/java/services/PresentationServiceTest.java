@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 import domain.Presentation;
 
 import utilities.AbstractTest;
+import utilities.TestUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/datasource.xml",
@@ -45,6 +46,10 @@ public class PresentationServiceTest extends AbstractTest {
 		authenticate("cook1");
 
 		Presentation t;
+		int masterClassId;
+		
+		masterClassId = TestUtils.getIdFromBeanName("masterClass1");
+		
 		t = presentationService.create();
 
 		t.setTitle("title");
@@ -52,7 +57,7 @@ public class PresentationServiceTest extends AbstractTest {
 		t.setAbstractText("abstracttext");
 
 		Presentation saved;
-		saved = presentationService.save(t);
+		saved = presentationService.save(t,masterClassId);
 		presentationService.flush();
 
 		Assert.isTrue(presentationService.exists(saved));
@@ -69,6 +74,10 @@ public class PresentationServiceTest extends AbstractTest {
 		authenticate("cook1");
 
 		Presentation t;
+		int masterClassId;
+		
+		masterClassId = TestUtils.getIdFromBeanName("masterClass1");
+		
 		t = presentationService.create();
 
 		t.setTitle("title");
@@ -76,9 +85,9 @@ public class PresentationServiceTest extends AbstractTest {
 		t.setAbstractText("abstracttext");
 
 		Presentation saved;
-		saved = presentationService.save(t);
+		saved = presentationService.save(t,masterClassId);
 
-		presentationService.delete(saved);
+		presentationService.delete(saved,masterClassId);
 
 		Assert.isTrue(!presentationService.exists(saved));
 

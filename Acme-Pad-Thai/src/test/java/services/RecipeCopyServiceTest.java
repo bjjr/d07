@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import utilities.TestUtils;
 import domain.Contest;
 import domain.LikeSA;
 import domain.Recipe;
@@ -60,8 +61,16 @@ public class RecipeCopyServiceTest extends AbstractTest {
 	@Test
 	public void testSaveRecipeCopy() {
 		authenticate("user1");
-		Contest contest= contestService.findOne(255);
-		Recipe recipe= recipeService.findByKeyword("Recipe1");
+		int contestId;
+		int recipeId;
+
+		contestId = TestUtils.getIdFromBeanName("contest1");
+		
+		Contest contest= contestService.findOne(contestId);
+		
+		recipeId = TestUtils.getIdFromBeanName("recipe1");
+		
+		Recipe recipe= recipeService.findOne(recipeId);
 		
 		
 		Assert.isTrue(actorService.checkAuthority("USER"));

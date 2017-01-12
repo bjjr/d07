@@ -11,6 +11,7 @@ import domain.Comment;
 import domain.Recipe;
 
 import utilities.AbstractTest;
+import utilities.TestUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -31,11 +32,13 @@ public class CommentServiceTest extends AbstractTest{
 	@Test
 	public void testCreateComment(){
 		Comment comment;
+		int recipeId;
 		Recipe recipe;
 		
 		super.authenticate("nutritionist1");
 		
-		recipe = recipeService.findByKeyword("123456-abCD");
+		recipeId = TestUtils.getIdFromBeanName("recipe1");
+		recipe = recipeService.findOne(recipeId);
 		comment = commentService.create(recipe);
 		
 		super.authenticate(null);
@@ -49,8 +52,8 @@ public class CommentServiceTest extends AbstractTest{
 		Comment comment, saved;
 		
 		super.authenticate("User2");
-		
-		comment = commentService.findOne(142);
+
+		comment = commentService.findOne(146);
 		
 		saved = commentService.save(comment);
 		commentService.flush();
@@ -64,7 +67,7 @@ public class CommentServiceTest extends AbstractTest{
 	public void testDeleteComment(){
 		Comment comment;
 		
-		comment = commentService.findOne(142);
+		comment = commentService.findOne(146);
 		
 		commentService.delete(comment);
 		
@@ -75,7 +78,7 @@ public class CommentServiceTest extends AbstractTest{
 	public void testFindOneComment(){
 		Comment comment;
 		
-		comment = commentService.findOne(142);
+		comment = commentService.findOne(146);
 				
 		System.out.println("Comment" + comment.getId() + "found");
 	}

@@ -165,11 +165,11 @@ public class ContestServiceTest extends AbstractTest {
 		System.out
 				.println("--------------List contest with more recipe copies------------");
 
-		Contest contest;
+		String contest;
 
 		contest = contestService.findContestMoreRecipesQualified();
 
-		System.out.println(contest.getTitle());
+		System.out.println(contest);
 
 		System.out
 				.println("----------------------END---------------------------");
