@@ -79,7 +79,7 @@
 			<display:column>
 				<jstl:if test="${masterClass.promoted == false}">
 					<spring:message code="masterClass.confirm.promote" var="confirmPromote" />
-					<a href="masterClass/admin/promote.do?masterClassId=${masterClass.id}"
+					<a href="masterClass/administrator/promote.do?masterClassId=${masterClass.id}"
 					 onclick="return confirm('${confirmPromote}')">
 						<spring:message code="masterClass.promote" var="promoteText" />
 						<jstl:out value="${promoteText}" />
@@ -88,7 +88,7 @@
 				
 				<jstl:if test="${masterClass.promoted == true}">
 					<spring:message code="masterClass.confirm.demote" var="confirmDemote" />
-					<a href="masterClass/admin/demote.do?masterClassId=${masterClass.id}"
+					<a href="masterClass/administrator/demote.do?masterClassId=${masterClass.id}"
 					 onclick="return confirm('${confirmDemote}')">
 				  		<spring:message code="masterClass.demote" var="demoteText" />
 				  		<jstl:out value="${demoteText}" />

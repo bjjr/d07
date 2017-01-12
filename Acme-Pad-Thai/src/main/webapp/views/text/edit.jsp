@@ -10,7 +10,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="text/edit.do?masterClassId=${masterClassId}" modelAttribute="text">
+<form:form action="text/cook/edit.do?masterClassId=${masterClassId}" modelAttribute="text">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
