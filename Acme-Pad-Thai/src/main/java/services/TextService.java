@@ -16,6 +16,7 @@ import org.springframework.util.Assert;
 
 import repositories.TextRepository;
 import domain.Actor;
+import domain.LearningMaterial;
 import domain.MasterClass;
 import domain.Text;
 
@@ -62,8 +63,10 @@ public class TextService {
 		Assert.isTrue(actorService.checkAuthority("COOK"));
 		Assert.notNull(t);
 		
-		Text res;
-		MasterClass masterClass;
+		Text res = null;
+		MasterClass masterClass = masterClassService.findOne(masterClassId);
+		Collection<LearningMaterial> lms = new ArrayList<LearningMaterial>(masterClass.getLearningMaterials());
+		Collection<LearningMaterial> nlms = new ArrayList<>();
 		
 		URLValidator validator = new URLValidator();
 		validator.initialize(new URL() {
@@ -120,9 +123,21 @@ public class TextService {
 			}
 		}
 		
-		masterClass = masterClassService.findOne(masterClassId);
-		res = textRepository.save(t);
-		masterClass.addLearningMaterial(res);
+		if (t.getId() != 0) {
+			for (LearningMaterial l : lms) {
+				if (l.getId() == t.getId()) {
+					res = textRepository.save(t);
+					nlms.add(res);
+				} else {
+					nlms.add(l);
+				}
+			}
+			masterClass.setLearningMaterials(nlms);
+		} else {
+			res = textRepository.save(t);
+			masterClass.addLearningMaterial(res);
+		}
+		
 		masterClassService.save(masterClass);
 		
 		return res;

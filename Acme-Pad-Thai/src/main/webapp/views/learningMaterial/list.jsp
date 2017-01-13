@@ -94,7 +94,7 @@
 
 <security:authorize access="hasRole('COOK')">
 	<div>
-		<a href="text/create.do?masterClassId=${masterClassId}">
+		<a href="text/cook/create.do?masterClassId=${masterClassId}">
 			<spring:message code="learningMaterial.create.text"/>
 		</a> &nbsp;
 		

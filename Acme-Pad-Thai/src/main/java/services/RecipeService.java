@@ -110,19 +110,13 @@ public class RecipeService {
 		Recipe result;
 		Date momentCreated;
 		Date momentUpdated;
-		Step defaultStep;
-		Quantity defaultQuantity;
 		Category defaultCategory;
+		ArrayList<Quantity> quantities;
+		Quantity q;
 		
 		if (recipe.getId() == 0) {
 			momentCreated = new Date(System.currentTimeMillis()-1000);
 			recipe.setMomentAuthored(momentCreated);
-			
-			defaultStep = stepService.createDefaultStep();
-			recipe.getSteps().add(defaultStep);
-			
-			defaultCategory = categoryService.findOne(104);
-			recipe.getCategories().add(defaultCategory);
 		}
 		
 		momentUpdated = new Date(System.currentTimeMillis()-1000);
@@ -138,10 +132,12 @@ public class RecipeService {
 			defaultCategory.addRecipe(result);
 			categoryService.save(defaultCategory);
 			
-			defaultQuantity = quantityService.createDefaultQuantity();
-			result.getQuantities().add(defaultQuantity);
-			defaultQuantity.setRecipe(result);
-			quantityService.save(defaultQuantity);
+			quantities = new ArrayList<>();
+			
+			q = quantityService.createDefaultQuantity();
+			q.setRecipe(result);
+			quantities.add(quantityService.save(q));
+			result.setQuantities(quantities);
 			
 			recipeRepository.save(result);
 			
@@ -419,6 +415,7 @@ public class RecipeService {
 		char[] r;
 		int z;
 		char c;
+		Integer month;
 		Calendar fecha;
 		
 		caracteresEspeciales= "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -427,7 +424,12 @@ public class RecipeService {
 		random= new Random();
 		fecha = Calendar.getInstance();
 		result += String.valueOf(fecha.get(Calendar.YEAR)).substring(2);
-		result += String.valueOf(fecha.get(Calendar.MONTH));
+		month = fecha.get(Calendar.MONTH) + 1;
+		if (month < 10) {
+			result += "0" + month;
+		} else {
+			result += month;
+		}
 		result += String.valueOf(fecha.get(Calendar.DAY_OF_MONTH));
 		
 		result += "-";

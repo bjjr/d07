@@ -16,6 +16,7 @@ import org.springframework.util.Assert;
 
 import repositories.PresentationRepository;
 import domain.Actor;
+import domain.LearningMaterial;
 import domain.MasterClass;
 import domain.Presentation;
 
@@ -62,9 +63,11 @@ public class PresentationService {
 		Assert.isTrue(actorService.checkAuthority("COOK"));
 		Assert.notNull(p);
 
-		Presentation res;
-		MasterClass masterClass;
+		Presentation res = null;
+		MasterClass masterClass = masterClassService.findOne(masterClassId);
 		URLValidator validator = new URLValidator();
+		Collection<LearningMaterial> lms = new ArrayList<LearningMaterial>(masterClass.getLearningMaterials());
+		Collection<LearningMaterial> nlms = new ArrayList<>();
 		validator.initialize(new URL() {
 			
 			@Override
@@ -119,9 +122,21 @@ public class PresentationService {
 			}
 		}
 		
-		masterClass = masterClassService.findOne(masterClassId);
-		res = presentationRepository.save(p);
-		masterClass.addLearningMaterial(res);
+		if (p.getId() != 0) {
+			for (LearningMaterial l : lms) {
+				if (l.getId() == p.getId()) {
+					res = presentationRepository.save(p);
+					nlms.add(res);
+				} else {
+					nlms.add(l);
+				}
+			}
+			masterClass.setLearningMaterials(nlms);
+		} else {
+			res = presentationRepository.save(p);
+			masterClass.addLearningMaterial(res);
+		}
+		
 		masterClassService.save(masterClass);
 
 		return res;
