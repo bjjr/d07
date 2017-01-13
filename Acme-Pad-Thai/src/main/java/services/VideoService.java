@@ -16,6 +16,7 @@ import org.springframework.util.Assert;
 
 import repositories.VideoRepository;
 import domain.Actor;
+import domain.LearningMaterial;
 import domain.MasterClass;
 import domain.Video;
 
@@ -62,8 +63,10 @@ public class VideoService {
 		Assert.isTrue(actorService.checkAuthority("COOK"));
 		Assert.notNull(v);
 		
-		Video res;
-		MasterClass masterClass;
+		Video res = null;
+		MasterClass masterClass = masterClassService.findOne(masterClassId);
+		Collection<LearningMaterial> lms = new ArrayList<LearningMaterial>(masterClass.getLearningMaterials());
+		Collection<LearningMaterial> nlms = new ArrayList<>();
 		
 		URLValidator validator = new URLValidator();
 		validator.initialize(new URL() {
@@ -120,9 +123,21 @@ public class VideoService {
 			}
 		}
 		
-		masterClass = masterClassService.findOne(masterClassId);
-		res = videoRepository.save(v);
-		masterClass.addLearningMaterial(res);
+		if (v.getId() != 0) {
+			for (LearningMaterial l : lms) {
+				if (l.getId() == v.getId()) {
+					res = videoRepository.save(v);
+					nlms.add(res);
+				} else {
+					nlms.add(l);
+				}
+			}
+			masterClass.setLearningMaterials(nlms);
+		} else {
+			res = videoRepository.save(v);
+			masterClass.addLearningMaterial(res);
+		}
+		
 		masterClassService.save(masterClass);
 		
 		return res;

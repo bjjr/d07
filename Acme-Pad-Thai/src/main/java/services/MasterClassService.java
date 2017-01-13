@@ -103,7 +103,6 @@ public class MasterClassService {
 	}
 
 	public Collection<MasterClass> findAllByCook() {
-		//TODO añadir a la lista de cambios
 		Assert.isTrue(actorService.checkAuthority("COOK") ||
 					  actorService.checkAuthority("ADMINISTRATOR"));
 
@@ -139,7 +138,6 @@ public class MasterClassService {
 	}
 
 	public MasterClass save(MasterClass m) {
-		// TODO Añadir a lista de cambios
 		Assert.isTrue(actorService.checkAuthority("USER")
 				|| actorService.checkAuthority("ADMINISTRATOR")
 				|| actorService.checkAuthority("NUTRITIONIST")
@@ -165,7 +163,8 @@ public class MasterClassService {
 		Collection<Actor> attenders;
 		attenders = findAttenders(m);
 		
-		sendDeletionMessage(m, attenders);
+		if (!attenders.isEmpty())
+			sendDeletionMessage(m, attenders);
 		
 		Cook c;
 		c = cookService.findByPrincipal();

@@ -31,9 +31,11 @@
 	</display:column>
 	<security:authorize access="hasRole('ADMINISTRATOR')">
 		<spring:message code="contest.edit" var="edit" />
-		<display:column title="${edit}">
-			<a href="contest/administrator/edit.do?contestId=${row.id}">${edit}</a>
-		</display:column>
+			<display:column title="${edit}">
+				<jstl:if test="${empty row.recipeCopies}">
+					<a href="contest/administrator/edit.do?contestId=${row.id}">${edit}</a>
+				</jstl:if>
+			</display:column>
 	</security:authorize>
 
 </display:table>

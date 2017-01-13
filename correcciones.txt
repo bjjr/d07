@@ -1,6 +1,6 @@
 Correcciones realizadas
 
-Correcciones de URLs en distintos apartados:
+· Correcciones de URLs en distintos apartados:
 
 URLs de Text:
 	Se han eliminado las URLs que empezaban con "text2".
@@ -12,3 +12,39 @@ URLs relacionadas con Administrator:
 
 Estos cambios se han realizado para no romper la lógica que siguen las URLs de
 la aplicación.
+
+· Correcciones en controladores:
+	Método save() en RecipeUserController: después de realizar la validación la
+	aplicación pierde contexto de la Quantity y el Step por defecto.
+
+	Método edit() en ContestAdministratorController: se lanza una excepción
+	cuando el administrador intenta editar una entidad de Contest con recetas
+	presentadas.
+
+· Correcciones en servicios:
+	Método delete() de MasterClassService: no se podían eliminar entidades que no
+	tuvieran alumnos.
+
+	Método save() de PresentationService, VideoService y TextService: al editar
+	una entidad de estas clases se añadía a la lista de LearningMaterials dos
+	entidades con los datos editados.
+
+	Método save() de RecipeService: se han realizado cambios para evitar la
+	pérdida del contexto de Quantity y Step por defecto asociado a la creación de
+	un Recipe.
+
+· Correcciones en vistas:
+	Vista contest/edit.do: se ha eliminado la posibilidad de editar
+	el título y el momento de comienzo de la entidad de un Contest abierto.
+
+	Vista contest/list.do: se ha eliminado la posibilidad de editar un Contest
+	cerrado.
+
+	Vista ingredient/edit.do: se oculta el botón de eliminar a la hora de crear
+	una entidad de la clase Ingredient.
+
+	Vista presentation/edit.do: se ha corregido la referencia a la URL de
+	Slideshare.
+
+	Vista property/edit.do: se oculta el botón de eliminar en la vista de creación
+	de una entidad de la clase Property.

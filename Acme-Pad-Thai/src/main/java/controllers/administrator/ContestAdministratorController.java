@@ -48,6 +48,7 @@ import domain.Contest;
 			Contest contest;
 			
 			contest = contestService.findOne(contestId);
+			Assert.isTrue(contest.getRecipeCopies().isEmpty());
 			Assert.notNull(contest);
 			result = createEditModelAndView(contest);
 			

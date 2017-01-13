@@ -38,9 +38,11 @@
 	<!-- Action buttons -->
 	<input type="submit" name="save"
 		value="<spring:message code="ingredient.save"/>"/>&nbsp;
-	<input type="submit" name="delete" 
+	<jstl:if test="${ingredient.id != 0}">
+		<input type="submit" name="delete" 
 		value="<spring:message code="ingredient.delete" />" 
 		onclick="return confirm('<spring:message code="ingredient.confirm.delete" />')" />&nbsp;
+	</jstl:if>
 	<input type="button" name="cancel"
 		value="<spring:message code="ingredient.cancel" />"
 		onclick="window.location='ingredient/nutritionist/list.do'" />

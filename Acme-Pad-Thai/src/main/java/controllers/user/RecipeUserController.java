@@ -15,14 +15,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.CategoryService;
 import services.ContestService;
+import services.QuantityService;
 import services.RecipeService;
+import services.StepService;
 import services.UserService;
 import controllers.AbstractController;
 import domain.Category;
 import domain.Contest;
 import domain.LikeSA;
+import domain.Quantity;
 import domain.Recipe;
 import domain.RecipeCopy;
+import domain.Step;
 import domain.User;
 
 @Controller
@@ -42,6 +46,12 @@ public class RecipeUserController extends AbstractController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private QuantityService quantityService;
+	
+	@Autowired
+	private StepService stepService;
 
 	// Constructors
 
@@ -205,6 +215,15 @@ public class RecipeUserController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid Recipe recipe, BindingResult binding) {
 		ModelAndView res;
+		Collection<Quantity> qs = new ArrayList<>();
+		Collection<Step> s = new ArrayList<>();
+		
+		if (recipe.getId() == 0) {
+			qs.add(quantityService.createDefaultQuantity());
+			s.add(stepService.createDefaultStep());
+			recipe.setQuantities(qs);
+			recipe.setSteps(s);
+		}
 
 		if (binding.hasErrors()) {
 			res = createEditModelAndView(recipe);
