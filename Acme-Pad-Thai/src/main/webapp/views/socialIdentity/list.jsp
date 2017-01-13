@@ -30,4 +30,8 @@
 	<display:column title="${picture}">
 		<jstl:out value="${row.picture }"/>
 	</display:column>
+	<spring:message code="socialIdentity.edit" var="edit" />
+		<display:column title="${edit}">
+			<a href="socialIdentity/actor/edit.do?socialIdentityId=${row.id}">${edit}</a>
+	</display:column>
 </display:table>
