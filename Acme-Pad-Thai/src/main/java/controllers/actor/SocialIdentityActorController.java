@@ -35,10 +35,13 @@ import domain.SocialIdentity;
 			
 		// Listing ----------------------------------------------------------
 		@RequestMapping(value="/list", method = RequestMethod.GET)
-		public ModelAndView list(@RequestParam int actorId,@RequestParam(required=false) String message){
+		public ModelAndView list(@RequestParam(required=false) String message){
 			
 			ModelAndView result;
 			Collection<SocialIdentity> socialIdentities;
+			int actorId;
+			
+			actorId = actorService.findByPrincipal().getId();
 			
 			socialIdentities = actorService.findOne(actorId).getSocialIdentities();
 					

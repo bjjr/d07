@@ -28,11 +28,13 @@
 					<li class="arrow"></li>
 					<li><a href="administrator/dashboard.do"><spring:message code="administrator.dashboard" /></a></li>
 					<li><a href="campaign/administrator/generate.do"><spring:message code="master.page.administrator.generateBills" /></a></li>
+					<li><a href="campaign/administrator/bulk.do"><spring:message code="master.page.administrator.sendBulkMessage" /></a></li>
 					<li><a href="cook/create.do"><spring:message code="master.page.administrator.create.cook" /></a></li>
 					<li><a href="contest/administrator/create.do"><spring:message code="master.page.administrator.create.contest" /></a></li>
 					<li><a href="category/administrator/list.do"><spring:message code="master.page.administrator.list.category" /></a></li>
 					<li><a href="masterClass/administrator/list.do"><spring:message code="master.page.administrator.list.masterClass" /></a></li>
 					<li><a href="spamWord/administrator/list.do"><spring:message code="master.page.administrator.list.spamWord" /></a></li>
+					<li><a href="socialIdentity/actor/list.do"><spring:message code="master.page.socialIdentity.list" /></a></li>
 					<li><a href="fee/administrator/edit.do"><spring:message code="master.page.administrator.edit.fee" /></a></li>
 				</ul>
 			</li>
@@ -44,6 +46,7 @@
 					<li class="arrow"></li>
 					<li><a href="masterClass/cook/list.do"><spring:message code="master.page.cook.list.masterClass" /></a></li>
 					<li><a href="masterClass/cook/create.do"><spring:message code="master.page.cook.create.masterClass" /></a></li>
+					<li><a href="socialIdentity/actor/list.do"><spring:message code="master.page.socialIdentity.list" /></a></li>
 					<li><a href="cook/edit.do"><spring:message code="master.page.actor.edit" /></a></li>
 				</ul>
 			</li>
@@ -56,6 +59,7 @@
 					<li><a href="recipe/user/list.do"><spring:message code="master.page.recipe.user.list" /></a></li>
 					<li><a href="recipe/user/listFollow.do"><spring:message code="master.page.recipe.user.listFollow" /></a></li>
 					<li><a href="socialActor/list.do"><spring:message code="master.page.socialActor.list" /></a></li>
+					<li><a href="socialIdentity/actor/list.do"><spring:message code="master.page.socialIdentity.list" /></a></li>
 					<li><a href="user/edit.do"><spring:message code="master.page.actor.edit" /></a></li>
 				</ul>
 			</li>
@@ -70,6 +74,7 @@
 					<li><a href="ingredient/nutritionist/list.do"><spring:message code="master.page.nutritionist.ingredient.list" /></a></li>
 					<li><a href="property/nutritionist/list.do"><spring:message code="master.page.nutritionist.property.list" /></a></li>
 					<li><a href="socialActor/list.do"><spring:message code="master.page.socialActor.list" /></a></li>
+					<li><a href="socialIdentity/actor/list.do"><spring:message code="master.page.socialIdentity.list" /></a></li>
 					<li><a href="nutritionist/edit.do"><spring:message code="master.page.actor.edit" /></a></li>
 				</ul>
 			</li>
@@ -81,6 +86,7 @@
 					<li class="arrow"></li>
 					<li><a href="campaign/sponsor/list.do"><spring:message code="master.page.sponsor.campaign.list" /></a></li>
 					<li><a href="campaign/sponsor/create.do"><spring:message code="master.page.sponsor.campaign.create" /></a></li>
+					<li><a href="socialIdentity/actor/list.do"><spring:message code="master.page.socialIdentity.list" /></a></li>
 					<li><a href="sponsor/edit.do"><spring:message code="master.page.actor.edit" /></a></li>
 				</ul>
 			</li>

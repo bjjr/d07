@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import domain.Actor;
 import domain.Bill;
 import domain.Sponsor;
 
@@ -32,4 +33,7 @@ public interface SponsorRepository extends JpaRepository<Sponsor, Integer> {
 	
 	@Query("select b from Sponsor s join s.campaigns c join c.bills b where s.id = ?1")
 	Collection<Bill> findBillsBySponsor(int id);
+	
+	@Query("select s from Sponsor s join s.campaigns c join c.bills b where b.paidMoment = null and (b.creationMoment + 30) >= (CURRENT_DATE) group by s.id")
+	Collection<Actor> delinquentDebtorSponsors();
 }
