@@ -11,8 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.CampaignRepository;
+import domain.Actor;
 import domain.Bill;
 import domain.Campaign;
+import domain.Message;
+import domain.Priority;
 
 @Service
 @Transactional
@@ -29,6 +32,10 @@ public class CampaignService {
 	private SponsorService sponsorService;
 	@Autowired
 	private BillService billService;
+	@Autowired
+	private MessageService messageService;
+	@Autowired
+	private PriorityService priorityService;
 
 	// Constructors -----------------------------------------------------------
 	public CampaignService() {
@@ -52,20 +59,57 @@ public class CampaignService {
 
 	public Campaign save(Campaign campaign) {
 		Assert.notNull(campaign);
-	
-
-		if (campaign.getId() == 0) {
+		Assert.isTrue(actorService.checkAuthority("SPONSOR"),
+				"Only an sponsor could save campaign");
+		
+		if(campaign.getId()!=0){
+			Assert.isTrue(new Date(System.currentTimeMillis()).compareTo(campaign
+				.getStartMoment()) < 0, "Could not edit a started campaign");
+		}
+		
 			Assert.isTrue(new Date(System.currentTimeMillis())
 					.compareTo(campaign.getStartMoment()) < 0);
 			Assert.isTrue(new Date(System.currentTimeMillis())
 					.compareTo(campaign.getEndMoment()) < 0);
-		}
 		Assert.isTrue(campaign.getStartMoment().compareTo(
 				campaign.getEndMoment()) < 0);
 
 		return campaignRepository.save(campaign);
 	}
 
+	public Campaign saveAnyone(Campaign campaign) {
+		Assert.notNull(campaign);
+		Campaign originalCampaign;
+		originalCampaign=campaignRepository.findOne(campaign.getId());
+		Assert.isTrue(campaign.getStartMoment().equals(originalCampaign.getStartMoment()));
+		Assert.isTrue(campaign.getEndMoment().equals(originalCampaign.getEndMoment()));
+		Assert.isTrue(campaign.getBanners().equals(originalCampaign.getBanners()));
+		Assert.isTrue(campaign.getMaxDisplayed()==originalCampaign.getMaxDisplayed());
+		Assert.isTrue(campaign.isStar()==originalCampaign.isStar());
+		Assert.isTrue(campaign.getBills().equals(originalCampaign.getBills()));
+		Assert.isTrue(campaign.getSponsor().equals(originalCampaign.getSponsor()));
+		
+		return campaignRepository.save(campaign);
+	}
+
+	public Campaign saveAdmin(Campaign campaign) {
+		Assert.notNull(campaign);
+		Assert.isTrue(actorService.checkAuthority("ADMINISTRATOR"),
+				"Only an administrator could save campaign");
+		
+		
+		Campaign originalCampaign;
+		originalCampaign=campaignRepository.findOne(campaign.getId());
+		Assert.isTrue(campaign.getStartMoment().equals(originalCampaign.getStartMoment()));
+		Assert.isTrue(campaign.getEndMoment().equals(originalCampaign.getEndMoment()));
+		Assert.isTrue(campaign.getBanners().equals(originalCampaign.getBanners()));
+		Assert.isTrue(campaign.getMaxDisplayed()==originalCampaign.getMaxDisplayed());
+		Assert.isTrue(campaign.isStar()==originalCampaign.isStar());
+		Assert.isTrue(campaign.getSponsor().equals(originalCampaign.getSponsor()));
+		
+		return campaignRepository.save(campaign);
+	}
+	
 	public void flush() {
 		campaignRepository.flush();
 	}
@@ -96,10 +140,6 @@ public class CampaignService {
 
 		result = campaignRepository.findOne(id);
 		Assert.notNull(result);
-		Assert.isTrue(
-				sponsorService.findByPrincipal().getCampaigns()
-						.contains(result),
-				"Sponsor only could see his campaigns");
 		return result;
 	}
 
@@ -115,7 +155,7 @@ public class CampaignService {
 			b1 = billService.save(b);
 			c.addBill(b1);
 			c.setDisplayed(0);
-			save(c);
+			saveAdmin(c);
 		}
 	}
 
@@ -123,6 +163,22 @@ public class CampaignService {
 		Boolean res;
 		res = campaignRepository.exists(id);
 		return res;
+	}
+	
+	public void sendBulkMessages(){
+		Collection<Actor> debtors;
+		Message bulkMessage;
+		Priority p;
+		
+		p = priorityService.findOne(23);
+		bulkMessage = messageService.create();
+		debtors = sponsorService.delinquentDebtorSponsors();
+		
+		bulkMessage.setBody("You have unpaid bills");
+		bulkMessage.setPriority(p);
+		bulkMessage.setSubject("Unpaid bills");
+		
+		messageService.sendMessage(bulkMessage, actorService.findByPrincipal(), debtors);
 	}
 
 	// Other business methods -------------------------------------------------
@@ -188,18 +244,18 @@ public class CampaignService {
 		return res;
 	}
 
-	public ArrayList<Campaign> findCampaignsWithDisplays() {
+	public ArrayList<Campaign> findCampaignsActiveWithDisplays() {
 		ArrayList<Campaign> res;
 
-		res = campaignRepository.findCampaignsWithDisplays();
+		res = campaignRepository.findCampaignsActiveWithDisplays();
 
 		return res;
 	}
 
-	public ArrayList<Campaign> findStarCampaignsWithDisplays() {
+	public ArrayList<Campaign> findStarCampaignsActiveWithDisplays() {
 		ArrayList<Campaign> res;
 
-		res = campaignRepository.findStarCampaignsWithDisplays();
+		res = campaignRepository.findStarCampaignsActiveWithDisplays();
 
 		return res;
 	}
@@ -207,14 +263,14 @@ public class CampaignService {
 	public void incrementDisplayed(Campaign c) {
 		Campaign res = c, saved;
 		res.setDisplayed(c.getDisplayed() + 1);
-		saved = save(res);
+		saved = saveAnyone(res);
 		Assert.isTrue(res.getDisplayed() == saved.getDisplayed());
 	}
 
 	public String displayBanner() {
 		String res = "";
 		ArrayList<String> banners;
-		ArrayList<Campaign> listC = findCampaignsWithDisplays();
+		ArrayList<Campaign> listC = findCampaignsActiveWithDisplays();
 		if (listC.size() > 0) {
 			Campaign c = listC.get(new Random().nextInt(listC.size()));
 			banners = new ArrayList<>(c.getBanners());
@@ -227,7 +283,7 @@ public class CampaignService {
 	public String displayBannerStar() {
 		String res = "";
 		ArrayList<String> banners;
-		ArrayList<Campaign> listC = findStarCampaignsWithDisplays();
+		ArrayList<Campaign> listC = findStarCampaignsActiveWithDisplays();
 		if (listC.size() > 0) {
 			Campaign c = listC.get(new Random().nextInt(listC.size()));
 			banners = new ArrayList<>(c.getBanners());

@@ -11,6 +11,7 @@ import repositories.SponsorRepository;
 import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
+import domain.Actor;
 import domain.Bill;
 import domain.Folder;
 import domain.Sponsor;
@@ -107,8 +108,17 @@ public class SponsorService {
 		return res;
 	}
 	
+	
 	// Other business methods -------------------------------------------------
 
+	public Collection<Actor> delinquentDebtorSponsors(){
+		Collection<Actor> res;
+		
+		res = sponsorRepository.delinquentDebtorSponsors();
+		
+		return res;
+	}
+	
 	public Sponsor findByPrincipal() {
 		Sponsor result;
 		UserAccount userAccount;

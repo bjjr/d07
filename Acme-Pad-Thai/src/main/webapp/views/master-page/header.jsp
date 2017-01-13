@@ -28,6 +28,7 @@
 					<li class="arrow"></li>
 					<li><a href="administrator/dashboard.do"><spring:message code="administrator.dashboard" /></a></li>
 					<li><a href="campaign/administrator/generate.do"><spring:message code="master.page.administrator.generateBills" /></a></li>
+					<li><a href="campaign/administrator/bulk.do"><spring:message code="master.page.administrator.sendBulkMessage" /></a></li>
 					<li><a href="cook/create.do"><spring:message code="master.page.administrator.create.cook" /></a></li>
 					<li><a href="contest/administrator/create.do"><spring:message code="master.page.administrator.create.contest" /></a></li>
 					<li><a href="category/administrator/list.do"><spring:message code="master.page.administrator.list.category" /></a></li>

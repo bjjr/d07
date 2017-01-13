@@ -38,6 +38,21 @@ import domain.Fee;
 			return result;
 		}
 		
+		@RequestMapping(value = "/bulk")
+		public ModelAndView sendBulkMessage() {
+			ModelAndView result;
+
+				try {
+					campaignService.sendBulkMessages();
+					result = new ModelAndView("redirect:/");
+				} catch (Throwable oops) {
+					result = new ModelAndView("redirect:/");
+				}
+			
+
+			return result;
+		}
+		
 		//Ancillary Methods ----------------------------------------------------------
 		
 		protected ModelAndView createEditModelAndView(Fee fee) {
