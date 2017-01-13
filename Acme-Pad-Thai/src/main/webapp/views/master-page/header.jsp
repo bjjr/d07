@@ -35,6 +35,7 @@
 					<li><a href="masterClass/administrator/list.do"><spring:message code="master.page.administrator.list.masterClass" /></a></li>
 					<li><a href="spamWord/administrator/list.do"><spring:message code="master.page.administrator.list.spamWord" /></a></li>
 					<li><a href="socialIdentity/actor/list.do"><spring:message code="master.page.socialIdentity.list" /></a></li>
+					<li><a href="administrator/edit.do"><spring:message code="master.page.actor.edit" /></a></li>
 					<li><a href="fee/administrator/edit.do"><spring:message code="master.page.administrator.edit.fee" /></a></li>
 				</ul>
 			</li>

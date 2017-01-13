@@ -86,7 +86,7 @@ public class RecipeService {
 		momentUpdated = new Date(System.currentTimeMillis()-1000);
 		steps.add(stepService.createDefaultStep());
 		quantities.add(quantityService.createDefaultQuantity());
-		categories.add(categoryService.findOne(104));
+		categories.add(categoryService.findOne(24));
 		ticker = createTicker();
 
 		owner = userService.findByPrincipal();
@@ -128,7 +128,7 @@ public class RecipeService {
 			recipe.getUser().addRecipe(result);
 			userService.save(recipe.getUser());
 			
-			defaultCategory = categoryService.findOne(104);
+			defaultCategory = categoryService.findOne(24);
 			defaultCategory.addRecipe(result);
 			categoryService.save(defaultCategory);
 			

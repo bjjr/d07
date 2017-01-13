@@ -97,9 +97,9 @@ public class QuantityService {
 		
 		res = new Quantity();
 				
-		res.setIngredient(ingredientService.findOne(154));
+		res.setIngredient(ingredientService.findOne(25));
 		res.setValue(1.0);
-		res.setUnit(unitService.findOne(34));
+		res.setUnit(unitService.findOne(15));
 		
 		return res;
 	}

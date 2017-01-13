@@ -20,6 +20,9 @@ public class AdministratorService {
 	@Autowired
 	private AdministratorRepository administratorRepository;
 	
+	@Autowired
+	private ActorService actorService;
+	
 	// Constructors -----------------------------------------
 	
 	public AdministratorService(){
@@ -27,6 +30,17 @@ public class AdministratorService {
 	}
 
 	// Simple CRUD methods ----------------------------------
+	
+	public Administrator save(Administrator admin) {
+		Assert.isTrue(actorService.checkAuthority("ADMINISTRATOR"));
+		Assert.notNull(admin);
+		
+		Administrator result;
+		
+		result = administratorRepository.save(admin);
+		
+		return result;
+	}
 	
 	// Other business methods -------------------------------
 	
